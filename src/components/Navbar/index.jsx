@@ -1,51 +1,72 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Phone, Mail, ChevronDown, Menu, X } from 'lucide-react'
+import { Phone, Mail, ChevronDown, ChevronRight, Menu, X } from 'lucide-react' // Added ChevronRight
 import { imagePaths } from '../../constants/imagePaths'
 import { navigationPaths } from '../../constants/navigationPath'
 
 export const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [activeDropdown, setActiveDropdown] = useState(null)
-    const [activeMobileDropdown, setActiveMobileDropdown] = useState(null) // Track active mobile dropdown
+    const [activeMobileDropdown, setActiveMobileDropdown] = useState(null)
+    const [activeMobileSubDropdown, setActiveMobileSubDropdown] = useState(null) // New state for mobile nested
     const location = useLocation()
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
 
-    // Helper to check if a path is active
     const isActive = (path) => {
         if (path === '/') return location.pathname === '/'
         return location.pathname.startsWith(path)
     }
 
-    // Helper for dropdowns to keep code clean
+    const formatTitle = (key) => key.replace(/_/g, ' ')
+
     const DropdownItem = ({ title, path }) => (
         <Link
             to={path}
-            className="block px-4 py-2 text-gray-700 hover:text-[#2b7fff] hover:bg-gray-50 transition-colors"
+            className="block px-4 py-2 text-gray-700 hover:text-[#2b7fff] hover:bg-gray-50 transition-colors whitespace-nowrap"
         >
             {title}
         </Link>
     )
 
+    const getLeafPath = (item) => {
+        if (!item || typeof item !== 'object') return item;
+        const keys = Object.keys(item).filter(k => k !== 'Root');
+        if (keys.length === 0) return item.Root || '#';
+
+        const firstKey = keys[0];
+        const firstValue = item[firstKey];
+
+        const childPath = getLeafPath(firstValue);
+        const root = item.Root || '';
+
+        // If childPath is absolute, return it as is
+        if (childPath && childPath.toString().startsWith('/')) return childPath;
+
+        // Clean join
+        return root ? `${root}/${childPath}` : childPath;
+    }
+
     const NavItem = ({ title, path, dropdownItems = null }) => {
         const isDropdown = !!dropdownItems
         const active = isActive(path)
+        const [openSubDropdown, setOpenSubDropdown] = useState(null) // Track open submenu on desktop
 
         let targetPath = path
         if (isDropdown) {
-            const firstChildEntry = Object.entries(dropdownItems).find(([key]) => key !== 'Root')
-            if (firstChildEntry) {
-                const [key, value] = firstChildEntry;
-                targetPath = value.startsWith('/') ? value : `${dropdownItems.Root}/${value}`;
-            }
+            targetPath = getLeafPath(dropdownItems);
         }
 
         return (
             <div
                 className="relative group h-full flex items-center"
                 onMouseEnter={() => isDropdown && setActiveDropdown(title)}
-                onMouseLeave={() => isDropdown && setActiveDropdown(null)}
+                onMouseLeave={() => {
+                    if (isDropdown) {
+                        setActiveDropdown(null)
+                        setOpenSubDropdown(null)
+                    }
+                }}
             >
                 <Link
                     to={targetPath}
@@ -59,15 +80,54 @@ export const Navbar = () => {
 
                 {/* Desktop Dropdown */}
                 {isDropdown && (
-                    <div className={`absolute top-full left-0 w-48 bg-white shadow-lg rounded-b-md py-2 border-t-2 border-[#2b7fff] z-50 transform transition-all duration-300 ease-in-out origin-top ${activeDropdown === title
+                    <div className={`absolute top-full left-0 w-64 bg-white shadow-lg rounded-b-md py-2 border-t-2 border-[#2b7fff] z-50 transform transition-all duration-300 ease-in-out origin-top ${activeDropdown === title
                         ? 'opacity-100 translate-y-0 visible'
                         : 'opacity-0 -translate-y-2 invisible'
                         }`}>
                         {Object.entries(dropdownItems).map(([key, value]) => {
                             if (key === 'Root') return null;
-                            // Construct absolute path
+
+                            // Handle Nested Dropdown (Sub-menu)
+                            if (typeof value === 'object') {
+                                const subPath = `${dropdownItems.Root}/${getLeafPath(value)}`;
+                                return (
+                                    <div
+                                        key={key}
+                                        className="relative group/submenu"
+                                        onMouseEnter={() => setOpenSubDropdown(key)}
+                                        onMouseLeave={() => setOpenSubDropdown(null)}
+                                    >
+                                        <Link
+                                            to={subPath}
+                                            className="flex items-center justify-between px-4 py-2 text-gray-700 hover:text-[#2b7fff] hover:bg-gray-50 transition-colors cursor-pointer"
+                                            onClick={() => {
+                                                setActiveDropdown(null)
+                                                setOpenSubDropdown(null)
+                                            }}
+                                        >
+                                            <span>{formatTitle(key)}</span>
+                                            <ChevronRight className="w-4 h-4" />
+                                        </Link>
+
+                                        {/* Sub-menu Flyout */}
+                                        <div className={`absolute top-0 right-full w-64 bg-white shadow-lg rounded-md py-2 border border-gray-100 -mr-1 ${openSubDropdown === key ? 'block' : 'hidden'}`}>
+                                            {Object.entries(value).map(([subKey, subValue]) => {
+                                                if (subKey === 'Root') return null;
+                                                // Construct absolute path for sub-item
+                                                const parentRoot = dropdownItems.Root;
+                                                const subRoot = value.Root;
+                                                const fullPath = `${parentRoot}/${subRoot}/${subValue}`;
+
+                                                return <DropdownItem key={subKey} title={formatTitle(subKey)} path={fullPath} />
+                                            })}
+                                        </div>
+                                    </div>
+                                )
+                            }
+
+                            // Handle Standard Link
                             const absolutePath = value.startsWith('/') ? value : `${dropdownItems.Root}/${value}`;
-                            return <DropdownItem key={key} title={key} path={absolutePath} />
+                            return <DropdownItem key={key} title={formatTitle(key)} path={absolutePath} />
                         })}
                     </div>
                 )}
@@ -75,7 +135,6 @@ export const Navbar = () => {
         )
     }
 
-    // New Mobile Nav Item with Accordion support
     const MobileNavItem = ({ title, path, dropdownItems = null }) => {
         const isDropdown = !!dropdownItems
         const isOpen = activeMobileDropdown === title
@@ -85,8 +144,9 @@ export const Navbar = () => {
             if (isDropdown) {
                 e.preventDefault()
                 setActiveMobileDropdown(isOpen ? null : title)
+                setActiveMobileSubDropdown(null) // Reset sub-dropdown on parent toggle
             } else {
-                setIsMobileMenuOpen(false) // Close menu if it's a regular link
+                setIsMobileMenuOpen(false)
             }
         }
 
@@ -104,10 +164,48 @@ export const Navbar = () => {
                 </Link>
 
                 {isDropdown && (
-                    <div className={`overflow-hidden transition-all duration-300 ease-in-out bg-gray-50 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <div className={`overflow-hidden transition-all duration-300 ease-in-out bg-gray-50 ${isOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
                         <div className="flex flex-col py-1">
                             {Object.entries(dropdownItems).map(([key, value]) => {
                                 if (key === 'Root') return null;
+
+                                // Handle Nested Mobile Item
+                                if (typeof value === 'object') {
+                                    const isSubOpen = activeMobileSubDropdown === key;
+                                    return (
+                                        <div key={key}>
+                                            <button
+                                                onClick={() => setActiveMobileSubDropdown(isSubOpen ? null : key)}
+                                                className="w-full flex justify-between items-center pl-10 pr-6 py-2 text-sm text-700 hover:text-[#2b7fff] hover:bg-gray-100 transition-colors"
+                                            >
+                                                {formatTitle(key)}
+                                                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isSubOpen ? 'rotate-180' : ''}`} />
+                                            </button>
+
+                                            <div className={`overflow-hidden transition-all duration-300 bg-gray-100 ${isSubOpen ? 'max-h-96' : 'max-h-0'}`}>
+                                                {Object.entries(value).map(([subKey, subValue]) => {
+                                                    if (subKey === 'Root') return null;
+                                                    const parentRoot = dropdownItems.Root;
+                                                    const subRoot = value.Root;
+                                                    const fullPath = `${parentRoot}/${subRoot}/${subValue}`;
+
+                                                    return (
+                                                        <Link
+                                                            key={subKey}
+                                                            to={fullPath}
+                                                            className="pl-14 pr-6 py-2 text-sm text-gray-500 hover:text-[#2b7fff] block transition-colors"
+                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                        >
+                                                            {formatTitle(subKey)}
+                                                        </Link>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    )
+                                }
+
+                                // Handle Standard Mobile Link
                                 const absolutePath = value.startsWith('/') ? value : `${dropdownItems.Root}/${value}`;
                                 return (
                                     <Link
@@ -116,7 +214,7 @@ export const Navbar = () => {
                                         className="pl-10 pr-6 py-2 text-sm text-gray-600 hover:text-[#2b7fff] hover:bg-gray-100 block transition-colors"
                                         onClick={() => setIsMobileMenuOpen(false)}
                                     >
-                                        {key}
+                                        {formatTitle(key)}
                                     </Link>
                                 )
                             })}
