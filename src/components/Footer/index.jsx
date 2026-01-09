@@ -6,7 +6,7 @@ export const Footer = () => {
     return (
         <footer className="bg-[#161616] text-gray-400 font-sans">
             {/* Main Footer Section */}
-            <div className="container mx-auto px-6 md:px-16 lg:px-24 py-12">
+            <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-24 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
                     {/* Column 1: Useful Links */}

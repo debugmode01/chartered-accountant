@@ -24,6 +24,7 @@ export const Navbar = () => {
         <Link
             to={path}
             className="block px-4 py-2 text-gray-700 hover:text-[#2b7fff] hover:bg-gray-50 transition-colors whitespace-nowrap"
+            onClick={() => setActiveDropdown(null)}
         >
             {title}
         </Link>
@@ -240,26 +241,26 @@ export const Navbar = () => {
 
             {/* Sticky Main Navbar */}
             <header className="sticky top-0 z-50 w-full shadow-md font-sans bg-white">
-                <div className="h-20 relative">
-                    <div className="container mx-auto h-full px-6 md:px-16 lg:px-24 flex items-center justify-between">
+                <div className="h-20 relative overflow-hidden">
+                    {/* Decorative Background for Menu */}
+                    <div className="absolute top-0 right-0 h-full w-[58%] bg-[#fff8e1] skew-x-[-20deg] origin-bottom-right z-0 hidden lg:block transform translate-x-10"></div>
+                    <div className="absolute top-0 right-[55%] h-full w-4 bg-[#f0b100] skew-x-[-20deg] origin-bottom-right z-0 hidden lg:block"></div>
+
+                    <div className="container mx-auto h-full px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-24 flex items-center justify-between relative z-10">
 
                         {/* Logo Section */}
-                        <div className="flex items-center h-full relative z-20 pr-12">
-                            <Link to={navigationPaths.Home} className="flex items-center gap-3">
-                                <img src={imagePaths.caLogo} alt="Company Logo" className="h-12 w-auto object-contain" />
+                        <div className="flex items-center h-full relative z-20 pr-4 lg:pr-6">
+                            <Link to={navigationPaths.Home} className="flex items-center gap-2 lg:gap-3">
+                                <img src={imagePaths.caLogo} alt="Company Logo" className="h-10 lg:h-12 w-auto object-contain" />
                                 <div className="flex flex-col">
-                                    <span className="text-xl font-bold text-[#2b7fff] leading-tight">CA FIRM NAME</span>
-                                    <span className="text-xs text-gray-500 font-medium tracking-wider">CHARTERED ACCOUNTANTS</span>
+                                    <span className="text-lg lg:text-xl xl:text-2xl font-bold text-[#2b7fff] leading-tight text-nowrap">CA FIRM NAME</span>
+                                    <span className="text-[10px] lg:text-xs text-gray-500 font-medium tracking-wider text-nowrap">CHARTERED ACCOUNTANTS</span>
                                 </div>
                             </Link>
-
-                            {/* Diagonal Accent */}
-                            <div className="absolute -right-4 top-0 h-full w-20 bg-[#f0b100] transform skew-x-[-20deg] hidden md:block opacity-20 pointer-events-none"></div>
-                            <div className="absolute -right-8 top-0 h-full w-4 bg-[#f0b100] transform skew-x-[-20deg] hidden md:block"></div>
                         </div>
 
                         {/* Desktop Navigation */}
-                        <nav className="hidden lg:flex items-center h-full space-x-1 pl-8">
+                        <nav className="hidden lg:flex items-center h-full space-x-1 pl-2 relative z-20">
                             <NavItem title="Home" path={navigationPaths.Home} />
                             <NavItem title="About Us" path={navigationPaths.About} />
                             <NavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={navigationPaths.Services} />
