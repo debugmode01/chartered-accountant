@@ -1,23 +1,20 @@
-import { Navigate, Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router';
 import { navigationPaths } from '../constants/navigationPath';
 import { Home } from '../pages/Home';
 import { About } from '../pages/About';
 import { Services } from '../pages/Services';
 import { AppLayouts } from './AppLayouts';
+import { Contact } from '../pages/Contact';
 
 
 const AppRoutes = () => {
 
-    const Placeholder = ({ title }) => <div className="p-10 text-2xl font-bold text-center text-gray-500">Page: {title} <br /><span className="text-sm font-normal">Coming Soon</span></div>
+    const Placeholder = ({ title }) => <div className="container mx-auto px-6 md:px-16 lg:px-24 py-12 text-2xl font-bold text-center text-gray-500">Page: {title} <br /><span className="text-sm font-normal">Coming Soon</span></div>
 
     const signleRoutes = [
         { path: navigationPaths.Home, element: <Home /> },
         { path: navigationPaths.About, element: <About /> },
-        { path: navigationPaths.OurTeam, element: <Placeholder title="Our Team" /> },
-        { path: navigationPaths.Career, element: <Placeholder title="Career" /> },
-        { path: navigationPaths.ContactUs, element: <Placeholder title="Contact Us" /> },
-        { path: navigationPaths.Blog, element: <Placeholder title="Blog" /> },
-        { path: navigationPaths.NewsFeed, element: <Placeholder title="News Feed" /> },
+        { path: navigationPaths.ContactUs, element: <Contact /> },
     ]
 
 

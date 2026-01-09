@@ -21,7 +21,6 @@ export const navigationPaths = {
     },
     Career: '/career',
     ContactUs: '/contact',
-    Blog: '/blog',
     NewsFeed: '/news',
     Testimonials: '/testimonials',
     Projects: '/projects',
