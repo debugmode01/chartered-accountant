@@ -241,10 +241,13 @@ export const Navbar = () => {
 
             {/* Sticky Main Navbar */}
             <header className="sticky top-0 z-50 w-full shadow-md font-sans bg-white">
-                <div className="h-20 relative overflow-hidden">
-                    {/* Decorative Background for Menu */}
-                    <div className="absolute top-0 right-0 h-full w-[58%] bg-[#fff8e1] skew-x-[-20deg] origin-bottom-right z-0 hidden lg:block transform translate-x-10"></div>
-                    <div className="absolute top-0 right-[55%] h-full w-4 bg-[#f0b100] skew-x-[-20deg] origin-bottom-right z-0 hidden lg:block"></div>
+                <div className="h-20 relative">
+                    {/* Decorative Background Wrapper */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        {/* Decorative Background for Menu */}
+                        <div className="absolute top-0 right-0 h-full w-[58%] bg-[#fff8e1] skew-x-[-20deg] origin-bottom-right z-0 hidden lg:block transform translate-x-10"></div>
+                        <div className="absolute top-0 right-[55%] h-full w-4 bg-[#f0b100] skew-x-[-20deg] origin-bottom-right z-0 hidden lg:block"></div>
+                    </div>
 
                     <div className="container mx-auto h-full px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-24 flex items-center justify-between relative z-10">
 
