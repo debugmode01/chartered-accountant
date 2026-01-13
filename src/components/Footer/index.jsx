@@ -28,21 +28,23 @@ export const Footer = () => {
                             Office Address
                             <span className="absolute -bottom-2 left-0 w-12 h-1 bg-gray-600"></span>
                         </h3>
-                        <div className="flex items-start gap-4">
-                            <div className="bg-white p-2 rounded-sm text-black shrink-0">
-                                <Briefcase className="w-5 h-5" />
+                        <div className='space-y-6'>
+                            <div className="flex items-start gap-4">
+                                <div className="bg-white p-2 rounded-sm text-black shrink-0">
+                                    <Briefcase className="w-5 h-5" />
+                                </div>
+                                <p className="leading-relaxed">
+                                    201 - B, 2nd Floor, Praksh Deep Building, <br />
+                                    Near PNB Bank and Delhi Medical Association, Daryaganj <br />
+                                    New Delhi - 110002
+                                </p>
                             </div>
-                            <p className="leading-relaxed">
-                                201 - B, 2nd Floor, Praksh Deep Building, <br />
-                                Near PNB Bank and Delhi Medical Association, Daryaganj <br />
-                                New Delhi - 110002
-                            </p>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="bg-white p-2 rounded-sm text-black shrink-0">
-                                <Phone className="w-5 h-5" />
+                            <div className="flex items-center gap-4">
+                                <div className="bg-white p-2 rounded-sm text-black shrink-0">
+                                    <Phone className="w-5 h-5" />
+                                </div>
+                                <p>+91 9899092439 <br /> +91 9560876725</p>
                             </div>
-                            <p>+91 9899092439 <br /> +91 9560876725</p>
                         </div>
                     </div>
 

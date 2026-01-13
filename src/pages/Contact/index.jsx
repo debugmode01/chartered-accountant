@@ -1,6 +1,93 @@
-import { MapPin, Phone, Mail } from 'lucide-react';
+import { useState } from 'react';
+import { MapPin, Phone, Mail, Send, Loader2 } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 export const Contact = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+    });
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+
+    const validate = () => {
+        const newErrors = {};
+
+        // Name Validation
+        if (!formData.name.trim()) {
+            newErrors.name = 'Full Name is required';
+        } else if (formData.name.length < 3) {
+            newErrors.name = 'Name must be at least 3 characters';
+        }
+
+        // Phone Validation
+        if (!formData.phone.trim()) {
+            newErrors.phone = 'Phone Number is required';
+        } else if (!/^\d{10}$/.test(formData.phone)) {
+            newErrors.phone = 'Phone number must be exactly 10 digits';
+        }
+
+        // Email Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email Address is required';
+        } else if (!emailRegex.test(formData.email)) {
+            newErrors.email = 'Please enter a valid email address';
+        }
+
+        // Subject Validation
+        if (!formData.subject.trim()) {
+            newErrors.subject = 'Subject is required';
+        } else if (formData.subject.length < 5) {
+            newErrors.subject = 'Subject must be at least 5 characters';
+        }
+
+        // Message Validation
+        if (!formData.message.trim()) {
+            newErrors.message = 'Message is required';
+        } else if (formData.message.length < 10) {
+            newErrors.message = 'Message must be at least 10 characters';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+
+        // Clear error on change if it exists
+        if (errors[name]) {
+            setErrors({ ...errors, [name]: '' });
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!validate()) return;
+
+        setLoading(true);
+
+        // Simulate API call
+        setTimeout(() => {
+            setLoading(false);
+            toast.success("Message sent successfully! We will get back to you soon.");
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                subject: '',
+                message: ''
+            });
+            setErrors({});
+        }, 2000);
+    };
+
     return (
         <div className="bg-gray-50 min-h-screen">
             {/* Header Section */}
@@ -13,85 +100,169 @@ export const Contact = () => {
                 </div>
             </div>
 
-            <div className="container mx-auto px-6 md:px-16 lg:px-24 py-20">
-                <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-                    <div className="grid grid-cols-1 md:grid-cols-2">
-                        {/* Left Side: Google Map */}
-                        <div className="h-[400px] md:h-full min-h-[500px] w-full bg-gray-200 relative">
-                            <iframe
-                                src="https://maps.google.com/maps?q=28.6434043,77.2436786&hl=en&z=17&output=embed"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen=""
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                className="absolute inset-0"
-                                title="Office Location"
-                            ></iframe>
+            <div className="container mx-auto px-6 md:px-16 lg:px-24 py-16">
+
+                {/* Contact Details Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    {/* Office Address */}
+                    <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border-t-4 border-[#2b7fff]">
+                        <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#2b7fff] mb-6">
+                            <MapPin className="w-6 h-6" />
                         </div>
+                        <h3 className="text-xl font-bold text-[#002b55] mb-4">Office Address</h3>
+                        <p className="text-gray-600 leading-relaxed">
+                            201 - B, 2nd Floor, Praksh Deep Building, <br />
+                            Near PNB Bank and Delhi Medical Association, Daryaganj <br />
+                            New Delhi - 110002
+                        </p>
+                    </div>
 
-                        {/* Right Side: Contact Details */}
-                        <div className="p-10 md:p-16 flex flex-col justify-center">
-                            <h2 className="text-3xl font-bold text-[#002b55] mb-2">Get in Touch</h2>
-                            <p className="text-gray-500 mb-10">We are always ready to help you.</p>
+                    {/* Registered Address */}
+                    <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border-t-4 border-[#2b7fff]">
+                        <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#2b7fff] mb-6">
+                            <MapPin className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-[#002b55] mb-4">Registered Address</h3>
+                        <p className="text-gray-600 leading-relaxed">
+                            Tirath Ram Shah Hospital, <br />
+                            11-A ASHOKA APARTMENT 7 RAJPUR ROAD, Civil Lines <br />
+                            New Delhi, Central Delhi, Delhi, 110054
+                        </p>
+                    </div>
 
-                            <div className="space-y-8">
-                                {/* Address Card */}
-                                <div className="flex items-start gap-4 group">
-                                    <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#2b7fff] group-hover:bg-[#2b7fff] group-hover:text-white transition-colors duration-300 shrink-0">
-                                        <MapPin className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-bold text-[#002b55] mb-1">Office Address</h3>
-                                        <p className="text-gray-600 leading-relaxed">
-                                            201 - B, 2nd Floor, Praksh Deep Building, <br />
-                                            Near PNB Bank and Delhi Medical Association, Daryaganj <br />
-                                            New Delhi - 110002
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start gap-4 group">
-                                    <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#2b7fff] group-hover:bg-[#2b7fff] group-hover:text-white transition-colors duration-300 shrink-0">
-                                        <MapPin className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-bold text-[#002b55] mb-1">Registered Address</h3>
-                                        <p className="text-gray-600 leading-relaxed">
-                                            Tirath Ram Shah Hospital, <br />
-                                            11-A ASHOKA APARTMENT 7 RAJPUR ROAD, Civil Lines <br />
-                                            New Delhi, Central Delhi, Delhi, 110054
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Phone Card */}
-                                <div className="flex items-start gap-4 group">
-                                    <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#2b7fff] group-hover:bg-[#2b7fff] group-hover:text-white transition-colors duration-300 shrink-0">
-                                        <Phone className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-bold text-[#002b55] mb-1">Phone Number</h3>
-                                        <p className="text-gray-600 font-medium">+91 9899092439</p>
-                                        <p className="text-gray-500 text-sm">Mon - Sat: 10:00 AM - 6:30 PM</p>
-                                    </div>
-                                </div>
-
-                                {/* Email Card */}
-                                <div className="flex items-start gap-4 group">
-                                    <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#2b7fff] group-hover:bg-[#2b7fff] group-hover:text-white transition-colors duration-300 shrink-0">
-                                        <Mail className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-bold text-[#002b55] mb-1">Email Address</h3>
-                                        <p className="text-gray-600 font-medium">ganshulassociates@gmail.com</p>
-                                        <p className="text-gray-500 text-sm">We reply within 24 hours</p>
-                                    </div>
-                                </div>
+                    {/* Contact Info */}
+                    <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border-t-4 border-[#2b7fff]">
+                        <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#2b7fff] mb-6">
+                            <Phone className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-[#002b55] mb-4">Contact Info</h3>
+                        <div className="space-y-4">
+                            <div>
+                                <p className="text-sm text-gray-400 font-semibold uppercase tracking-wider mb-1">PHONE</p>
+                                <p className="text-gray-600 font-medium">+91 9899092439</p>
+                            </div>
+                            <div>
+                                <p className="text-sm text-gray-400 font-semibold uppercase tracking-wider mb-1">EMAIL</p>
+                                <p className="text-gray-600 font-medium">ganshulassociates@gmail.com</p>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Form & Map Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+
+                    {/* Contact Form */}
+                    <div className="bg-white p-8 md:p-10 rounded-lg shadow-lg">
+                        <h2 className="text-2xl font-bold text-[#002b55] mb-6">Send us a Message</h2>
+                        <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        className={`w-full px-4 py-3 rounded-md border ${errors.name ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-[#2b7fff]'} focus:outline-none focus:ring-2 focus:border-transparent transition-all`}
+                                        placeholder="John Doe"
+                                    />
+                                    {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className={`w-full px-4 py-3 rounded-md border ${errors.phone ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-[#2b7fff]'} focus:outline-none focus:ring-2 focus:border-transparent transition-all`}
+                                        placeholder="+91 98765 43210"
+                                    />
+                                    {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        className={`w-full px-4 py-3 rounded-md border ${errors.email ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-[#2b7fff]'} focus:outline-none focus:ring-2 focus:border-transparent transition-all`}
+                                        placeholder="john@example.com"
+                                    />
+                                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        name="subject"
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        className={`w-full px-4 py-3 rounded-md border ${errors.subject ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-[#2b7fff]'} focus:outline-none focus:ring-2 focus:border-transparent transition-all`}
+                                        placeholder="How can we help?"
+                                    />
+                                    {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject}</p>}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    rows="4"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    className={`w-full px-4 py-3 rounded-md border ${errors.message ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-[#2b7fff]'} focus:outline-none focus:ring-2 focus:border-transparent transition-all resize-none`}
+                                    placeholder="Tell us more about your requirements..."
+                                ></textarea>
+                                {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full bg-[#002b55] text-white font-bold py-4 px-8 rounded-md hover:bg-[#2b7fff] transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                            >
+                                {loading ? (
+                                    <>
+                                        <Loader2 className="w-5 h-5 animate-spin" />
+                                        Sending...
+                                    </>
+                                ) : (
+                                    <>
+                                        Send Message
+                                        <Send className="w-5 h-5" />
+                                    </>
+                                )}
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Map */}
+                    <div className="h-[500px] lg:h-auto w-full bg-gray-200 rounded-lg overflow-hidden shadow-lg border border-gray-200 relative">
+                        <iframe
+                            src="https://maps.google.com/maps?q=28.6434043,77.2436786&hl=en&z=17&output=embed"
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            className="absolute inset-0"
+                            title="Office Location"
+                        ></iframe>
+                    </div>
+
                 </div>
             </div>
         </div>
