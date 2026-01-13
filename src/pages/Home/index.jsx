@@ -1,124 +1,63 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { navigationPaths } from '../../constants/navigationPath';
 import { Modal } from '../../components/Modal';
+import { services } from '../../constants/services';
 
 export const Home = () => {
     const [selectedFeature, setSelectedFeature] = useState(null)
     const [selectedService, setSelectedService] = useState(null)
+    const location = useLocation()
 
-    const services = [
-        {
-            id: 1,
-            title: "Accounting & Bookkeeping",
-            description: "Comprehensive day-to-day accounting and bookkeeping services",
-            details: [
-                "Daily Operations: Comprehensive day-to-day accounting and bookkeeping services.",
-                "Financial Reporting: Preparation of financial statements, MIS reports, and cash flow analysis.",
-                "Software Solutions: Expertise in Tally Prime, Sage, Xero, Zoho Books, and QuickBooks.",
-                "Data Management: Seamless migration of data between accounting platforms and cleanup of existing books.",
-                "STPI Compliance"
-            ]
-        },
-        {
-            id: 2,
-            title: "Taxation Services",
-            description: "ITR filing for Individuals, Firms, and Companies.",
-            details: [
-                "Tax Filing: ITR filing for Individuals, Firms, and Companies.",
-                "Compliance: TDS returns and compliance, along with representation before Income Tax Authorities.",
-                "Advisory: Strategic tax planning and professional advisory services.",
-                "Taxation Of Expats"
-            ]
-        },
-        {
-            id: 3,
-            title: "GST Services",
-            description: "New GST registration and advisory support.",
-            details: [
-                "Registration: New GST registration and advisory support.",
-                "Returns: Filing of monthly and quarterly GST returns, including GSTR-1 and GSTR-3B.",
-                "Audit: GST reconciliation and audit services."
-            ]
-        },
-        {
-            id: 4,
-            title: "Audit & Assurance",
-            description: "Statutory and Tax audits.",
-            details: [
-                "Core Audits: Statutory and Tax audits.",
-                "Internal Control: Internal and Concurrent audit services.",
-                "Certification: Professional certification services for business requirements."
-            ]
-        },
-        {
-            id: 5,
-            title: "Company & Business Compliance",
-            description: "Formation of Private Limited companies, LLPs, and OPCs.",
-            details: [
-                "Incorporation: Formation of Private Limited companies, LLPs, and OPCs.",
-                "Annual Filing: ROC filings and ongoing annual compliance.",
-                "Registrations: MSME and Startup registrations.",
-                "Consulting: Business restructuring and compliance advisory."
-            ]
-        },
-        {
-            id: 6,
-            title: "Payroll & Labour Compliance",
-            description: "End-to-end payroll processing and management.",
-            details: [
-                "Management: End-to-end payroll processing and management.",
-                "Labour Laws: Compliance for PF, ESI, and Professional Tax.",
-                "Advisory: Salary structuring and payroll advisory services."
-            ]
-        },
-        {
-            id: 7,
-            title: "Financial & Advisory Services",
-            description: "Business consulting, financial forecasting, and budgeting.",
-            details: [
-                "Planning: Business consulting, financial forecasting, and budgeting.",
-                "Funding Support: Preparation of project reports, CMA data, and loan/credit advisory."
-            ]
-        },
-        {
-            id: 8,
-            title: "Due diligence and Virtual CFO services.",
-            description: "Due diligence and Virtual CFO services",
-            details: []
-        },
-        {
-            id: 9,
-            title: "Business Set Up",
-            description: "PAN, TAN, and Digital Signature (DSC) services.",
-            details: [
-                "Documentation: PAN, TAN, and Digital Signature (DSC) services.",
-                "Certification: Issuance of net worth and turnover certificates."
-            ]
-        },
-    ]
+    useEffect(() => {
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }, [location]);
+
+
 
     const team = [
         {
             id: 1,
-            name: "Rosalina D. William",
+            name: "Anshul Gupta",
             role: "Founder",
-            image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
-            bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."
+            image: "/ca-founder.png",
+            bio: `CA Anshul Gupta is having a post-qualification
+                  experience of 11 years in bookkeeping,
+                  consultancy and advisory. His mission is to help
+                  businesses across the world create a hassle free
+                  work environment where businesses can solely
+                  focus on what they do best while CA Anshul Gupta
+                  delivers quality accounting, finance and reporting
+                  backbone.
+                  His vision is a world where businesses are
+                  realising their full potential through reduced internal
+                  friction and are achieving a high state of delight. He
+                  brings a skilled, knowledge-driven and a world
+                  class approach to reach accounting, finance,
+                  compliance and reporting related goals of any
+                  organisation.`
         },
         {
             id: 2,
-            name: "Velavos H. DesuJa",
-            role: "CEO",
-            image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
-            bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."
+            name: "Mihir Ranjan Samal",
+            role: "",
+            image: "/mihir-ranjan-samal.jpeg",
+            bio: ""
         },
         {
             id: 3,
-            name: "Abdur Rahman J.",
-            role: "Developer",
-            image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
-            bio: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."
+            name: "Golekha Nayak",
+            role: "",
+            image: "/happy.jpeg",
+            bio: ""
         }
     ]
 
@@ -147,12 +86,12 @@ export const Home = () => {
                             FOR YOUR <br />
                             <span className="text-[#002b55]">BUSINESS</span>
                         </h1>
-                        <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
+                        {/* <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
                             We have over 25 year's of experience in Finance and Business management so we can make your business more successful you can trust us.
-                        </p>
+                        </p> */}
 
                         <Link
-                            to={navigationPaths.Services.Root}
+                            to="#services-section"
                             className="inline-block bg-[#002b55] hover:bg-[#2b7fff] text-white font-bold py-4 px-10 rounded shadow-lg transform hover:-translate-y-1 transition-all duration-300"
                         >
                             VIEW SERVICES
@@ -162,7 +101,8 @@ export const Home = () => {
             </div>
 
             {/* What We Serve Section */}
-            <div className="py-24 relative bg-gray-50 overflow-hidden">
+            {/* What We Serve Section */}
+            <div id="services-section" className="py-24 relative bg-gray-50 overflow-hidden scroll-mt-28">
                 {/* Dotted Background Pattern */}
                 <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-70"></div>
 
@@ -177,8 +117,9 @@ export const Home = () => {
                         {services.map((item) => (
                             <div
                                 key={item.id}
+                                id={`service-${item.id}`} // Added ID for scroll targeting
                                 onClick={() => setSelectedFeature(item)}
-                                className="bg-white p-6 lg:p-10 rounded-lg shadow-sm hover:shadow-2xl transition-all duration-300 group cursor-pointer border border-gray-100 h-full flex flex-col items-start"
+                                className="bg-white p-6 lg:p-10 rounded-lg shadow-sm hover:shadow-2xl transition-all duration-300 group cursor-pointer border border-gray-100 h-full flex flex-col items-start scroll-mt-28"
                             >
                                 <div className="flex items-center gap-4 mb-6">
                                     <div className="w-16 h-16 rounded-full border-2 border-gray-50 bg-white flex items-center justify-center text-[#2b7fff] group-hover:bg-[#2b7fff] group-hover:text-white group-hover:border-[#2b7fff] transition-all duration-300 shadow-sm shrink-0">

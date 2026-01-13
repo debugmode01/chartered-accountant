@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Phone, Mail, ChevronDown, ChevronRight, Menu, X } from 'lucide-react' // Added ChevronRight
 import { imagePaths } from '../../constants/imagePaths'
 import { navigationPaths } from '../../constants/navigationPath'
+import { services } from '../../constants/services'
 
 export const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -20,11 +21,28 @@ export const Navbar = () => {
 
     const formatTitle = (key) => key.replace(/_/g, ' ')
 
+    const handleScroll = (e, path) => {
+        if (path.includes('#')) {
+            const [pathname, hash] = path.split('#');
+            // If we are already on the target page (e.g., '/')
+            if (location.pathname === (pathname || '/')) {
+                e.preventDefault();
+                const element = document.getElementById(hash);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+    }
+
     const DropdownItem = ({ title, path }) => (
         <Link
             to={path}
             className="block px-4 py-2 text-gray-700 hover:text-[#2b7fff] hover:bg-gray-50 transition-colors whitespace-nowrap"
-            onClick={() => setActiveDropdown(null)}
+            onClick={(e) => {
+                setActiveDropdown(null)
+                handleScroll(e, path)
+            }}
         >
             {title}
         </Link>
@@ -206,6 +224,8 @@ export const Navbar = () => {
                                     )
                                 }
 
+
+
                                 // Handle Standard Mobile Link
                                 const absolutePath = value.startsWith('/') ? value : `${dropdownItems.Root}/${value}`;
                                 return (
@@ -213,17 +233,31 @@ export const Navbar = () => {
                                         key={key}
                                         to={absolutePath}
                                         className="pl-10 pr-6 py-2 text-sm text-gray-600 hover:text-[#2b7fff] hover:bg-gray-100 block transition-colors"
-                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        onClick={(e) => {
+                                            setIsMobileMenuOpen(false)
+                                            handleScroll(e, absolutePath)
+                                        }}
                                     >
                                         {formatTitle(key)}
                                     </Link>
                                 )
                             })}
-                        </div>
-                    </div>
+                        </div >
+                    </div >
                 )}
-            </div>
+            </div >
         )
+    }
+
+
+    // Construct services dropdown object dynamically
+    const servicesDropdown = {
+        Root: '/',
+        ...services.reduce((acc, service) => {
+            const key = service.title.replace(/ /g, '_');
+            acc[key] = `/#service-${service.id}`;
+            return acc;
+        }, {})
     }
 
     return (
@@ -231,11 +265,11 @@ export const Navbar = () => {
             {/* Top Utility Bar */}
             <div className="bg-[#2b7fff] text-white h-10 px-6 md:px-16 lg:px-24 flex items-center justify-between text-sm font-sans">
                 <div className="flex items-center space-x-4">
-                    <span className="flex items-center gap-2"><Phone className="w-4 h-4" /> +91 123 456 7890</span>
-                    <span className="hidden sm:flex items-center gap-2"><Mail className="w-4 h-4" /> info@company.com</span>
+                    <span className="flex items-center gap-2"><Phone className="w-4 h-4" />+91 9899092439</span>
+                    <span className="hidden sm:flex items-center gap-2"><Mail className="w-4 h-4" /> ganshulassociates@gmail.com</span>
                 </div>
                 <div className="flex items-center space-x-4">
-                    <span>Monday - Saturday, 10am - 7pm</span>
+                    <span>Monday - Saturday, 10am - 6:30pm</span>
                 </div>
             </div>
 
@@ -256,7 +290,7 @@ export const Navbar = () => {
                             <Link to={navigationPaths.Home} className="flex items-center gap-2 lg:gap-3">
                                 <img src={imagePaths.caLogo} alt="Company Logo" className="h-10 lg:h-12 w-auto object-contain" />
                                 <div className="flex flex-col">
-                                    <span className="text-lg lg:text-xl xl:text-2xl font-bold text-[#2b7fff] leading-tight text-nowrap">CA FIRM NAME</span>
+                                    <span className="text-lg lg:text-xl xl:text-2xl font-bold text-[#2b7fff] leading-tight text-nowrap">CA ANSHUL GUPTA</span>
                                     <span className="text-[10px] lg:text-xs text-gray-500 font-medium tracking-wider text-nowrap">CHARTERED ACCOUNTANTS</span>
                                 </div>
                             </Link>
@@ -266,7 +300,7 @@ export const Navbar = () => {
                         <nav className="hidden lg:flex items-center h-full space-x-1 pl-2 relative z-20">
                             <NavItem title="Home" path={navigationPaths.Home} />
                             <NavItem title="About Us" path={navigationPaths.About} />
-                            <NavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={navigationPaths.Services} />
+                            <NavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={servicesDropdown} />
                             {/* <NavItem title="GST" path={navigationPaths.GST.Root} dropdownItems={navigationPaths.GST} /> */}
                             {/* <NavItem title="Knowledge Base" path={navigationPaths.KnowledgeBase.Root} dropdownItems={navigationPaths.KnowledgeBase} /> */}
                             <NavItem title="Contact" path={navigationPaths.ContactUs} />
@@ -291,7 +325,7 @@ export const Navbar = () => {
                     <div className="flex flex-col py-2 overflow-y-auto max-h-[calc(100vh-120px)]">
                         <MobileNavItem title="Home" path={navigationPaths.Home} />
                         <MobileNavItem title="About Us" path={navigationPaths.About} />
-                        <MobileNavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={navigationPaths.Services} />
+                        <MobileNavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={servicesDropdown} />
                         {/* <MobileNavItem title="GST" path={navigationPaths.GST.Root} dropdownItems={navigationPaths.GST} /> */}
                         {/* <MobileNavItem title="Knowledge Base" path={navigationPaths.KnowledgeBase.Root} dropdownItems={navigationPaths.KnowledgeBase} /> */}
                         <MobileNavItem title="Contact Us" path={navigationPaths.ContactUs} />

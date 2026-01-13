@@ -19,7 +19,7 @@ export const Contact = () => {
                         {/* Left Side: Google Map */}
                         <div className="h-[400px] md:h-full min-h-[500px] w-full bg-gray-200 relative">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.880696366578!2d77.3087093!3d28.580005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce45f4d8e3d0d%3A0x7e4453216834571!2sSector%203%2C%20Noida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1709230000000!5m2!1sen!2sin"
+                                src="https://maps.google.com/maps?q=28.6434043,77.2436786&hl=en&z=17&output=embed"
                                 width="100%"
                                 height="100%"
                                 style={{ border: 0 }}
@@ -45,8 +45,23 @@ export const Contact = () => {
                                     <div>
                                         <h3 className="text-lg font-bold text-[#002b55] mb-1">Office Address</h3>
                                         <p className="text-gray-600 leading-relaxed">
-                                            A-11, 2nd Floor, Sector 3, <br />
-                                            Noida, Uttar Pradesh, 201301
+                                            201 - B, 2nd Floor, Praksh Deep Building, <br />
+                                            Near PNB Bank and Delhi Medical Association, Daryaganj <br />
+                                            New Delhi - 110002
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-4 group">
+                                    <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#2b7fff] group-hover:bg-[#2b7fff] group-hover:text-white transition-colors duration-300 shrink-0">
+                                        <MapPin className="w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-bold text-[#002b55] mb-1">Registered Address</h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            Tirath Ram Shah Hospital, <br />
+                                            11-A ASHOKA APARTMENT 7 RAJPUR ROAD, Civil Lines <br />
+                                            New Delhi, Central Delhi, Delhi, 110054
                                         </p>
                                     </div>
                                 </div>
@@ -58,8 +73,8 @@ export const Contact = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-lg font-bold text-[#002b55] mb-1">Phone Number</h3>
-                                        <p className="text-gray-600 font-medium">+91 98765 43210</p>
-                                        <p className="text-gray-500 text-sm">Mon - Sat: 9:00 AM - 6:00 PM</p>
+                                        <p className="text-gray-600 font-medium">+91 9899092439</p>
+                                        <p className="text-gray-500 text-sm">Mon - Sat: 10:00 AM - 6:30 PM</p>
                                     </div>
                                 </div>
 
@@ -70,7 +85,7 @@ export const Contact = () => {
                                     </div>
                                     <div>
                                         <h3 className="text-lg font-bold text-[#002b55] mb-1">Email Address</h3>
-                                        <p className="text-gray-600 font-medium">info@ca-project.com</p>
+                                        <p className="text-gray-600 font-medium">ganshulassociates@gmail.com</p>
                                         <p className="text-gray-500 text-sm">We reply within 24 hours</p>
                                     </div>
                                 </div>
