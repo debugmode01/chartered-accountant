@@ -1,7 +1,6 @@
 export const navigationPaths = {
     Home: '/',
     About: '/about',
-    OurTeam: '/team',
     Services: {
         Root: '/services',
         Audit_And_Assurance: 'audit-and-assurance',

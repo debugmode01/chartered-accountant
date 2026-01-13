@@ -7,56 +7,95 @@ export const Home = () => {
     const [selectedFeature, setSelectedFeature] = useState(null)
     const [selectedService, setSelectedService] = useState(null)
 
-    const features = [
-        {
-            id: 1,
-            title: "Professional",
-            description: "Explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete.",
-            details: "Our professional services are designed to meet the highest standards of the industry. We employ a team of dedicated experts who understand the nuances of finance and business management. Whether you need auditing, tax consultancy, or strategic financial planning, we provide comprehensive solutions tailored to your specific needs. We believe in building long-term relationships based on trust and integrity."
-        },
-        {
-            id: 2,
-            title: "Expert Advice",
-            description: "We provide expert advice to help you navigate through complex financial landscapes and make informed decisions for your business.",
-            details: "Navigating the complex world of finance requires more than just basic knowledge; it demands expertise. Our consultants bring decades of experience to the table, offering insights that can transform your business operations. From regulatory compliance to investment strategies, we guide you every step of the way to ensure your business thrives in a competitive market."
-        },
-        {
-            id: 3,
-            title: "Business Growth",
-            description: "Our goal is to help your business grow by providing strategic insights and practical solutions that drive results.",
-            details: "Growth is the lifeblood of any business. We focus on identifying opportunities for expansion and efficiency. Our strategic planning services analyze your current position and chart a clear path forward. We help you optimize resources, reduce costs, and maximize profitability, ensuring sustainable growth for years to come."
-        }
-    ]
-
     const services = [
         {
             id: 1,
-            image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
-            category: "Finance",
-            title: "Financial Planning",
-            details: "Comprehensive financial planning services to secure your company's future. We analyze your current assets, liabilities, and investment strategies to create a robust roadmap for sustainable growth."
+            title: "Accounting & Bookkeeping",
+            description: "Comprehensive day-to-day accounting and bookkeeping services",
+            details: [
+                "Daily Operations: Comprehensive day-to-day accounting and bookkeeping services.",
+                "Financial Reporting: Preparation of financial statements, MIS reports, and cash flow analysis.",
+                "Software Solutions: Expertise in Tally Prime, Sage, Xero, Zoho Books, and QuickBooks.",
+                "Data Management: Seamless migration of data between accounting platforms and cleanup of existing books.",
+                "STPI Compliance"
+            ]
         },
         {
             id: 2,
-            image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=800",
-            category: "Strategy",
-            title: "Business Growth",
-            details: "Strategic consulting to help your business expand into new markets. We provide market analysis, competitor research, and actionable strategies to scale your operations effectively."
+            title: "Taxation Services",
+            description: "ITR filing for Individuals, Firms, and Companies.",
+            details: [
+                "Tax Filing: ITR filing for Individuals, Firms, and Companies.",
+                "Compliance: TDS returns and compliance, along with representation before Income Tax Authorities.",
+                "Advisory: Strategic tax planning and professional advisory services.",
+                "Taxation Of Expats"
+            ]
         },
         {
             id: 3,
-            image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
-            category: "Audit",
-            title: "Tax & Compliance",
-            details: "Ensure your business remains compliant with all tax regulations. Our experts handle tax filing, auditing, and regulatory compliance so you can focus on running your business."
+            title: "GST Services",
+            description: "New GST registration and advisory support.",
+            details: [
+                "Registration: New GST registration and advisory support.",
+                "Returns: Filing of monthly and quarterly GST returns, including GSTR-1 and GSTR-3B.",
+                "Audit: GST reconciliation and audit services."
+            ]
         },
         {
             id: 4,
-            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800",
-            category: "Analysis",
-            title: "Risk Management",
-            details: "Identify and mitigate potential business risks before they impact your bottom line. We use advanced analytics to forecast trends and develop safeguards for your assets."
-        }
+            title: "Audit & Assurance",
+            description: "Statutory and Tax audits.",
+            details: [
+                "Core Audits: Statutory and Tax audits.",
+                "Internal Control: Internal and Concurrent audit services.",
+                "Certification: Professional certification services for business requirements."
+            ]
+        },
+        {
+            id: 5,
+            title: "Company & Business Compliance",
+            description: "Formation of Private Limited companies, LLPs, and OPCs.",
+            details: [
+                "Incorporation: Formation of Private Limited companies, LLPs, and OPCs.",
+                "Annual Filing: ROC filings and ongoing annual compliance.",
+                "Registrations: MSME and Startup registrations.",
+                "Consulting: Business restructuring and compliance advisory."
+            ]
+        },
+        {
+            id: 6,
+            title: "Payroll & Labour Compliance",
+            description: "End-to-end payroll processing and management.",
+            details: [
+                "Management: End-to-end payroll processing and management.",
+                "Labour Laws: Compliance for PF, ESI, and Professional Tax.",
+                "Advisory: Salary structuring and payroll advisory services."
+            ]
+        },
+        {
+            id: 7,
+            title: "Financial & Advisory Services",
+            description: "Business consulting, financial forecasting, and budgeting.",
+            details: [
+                "Planning: Business consulting, financial forecasting, and budgeting.",
+                "Funding Support: Preparation of project reports, CMA data, and loan/credit advisory."
+            ]
+        },
+        {
+            id: 8,
+            title: "Due diligence and Virtual CFO services.",
+            description: "Due diligence and Virtual CFO services",
+            details: []
+        },
+        {
+            id: 9,
+            title: "Business Set Up",
+            description: "PAN, TAN, and Digital Signature (DSC) services.",
+            details: [
+                "Documentation: PAN, TAN, and Digital Signature (DSC) services.",
+                "Certification: Issuance of net worth and turnover certificates."
+            ]
+        },
     ]
 
     const team = [
@@ -122,20 +161,20 @@ export const Home = () => {
                 </div>
             </div>
 
-            {/* What We Do Section */}
+            {/* What We Serve Section */}
             <div className="py-24 relative bg-gray-50 overflow-hidden">
                 {/* Dotted Background Pattern */}
                 <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-70"></div>
 
                 <div className="container mx-auto px-6 md:px-16 lg:px-24 relative z-10">
                     <div className="text-center mb-16">
-                        <span className="text-[#2b7fff] font-bold tracking-wider uppercase text-sm">WHAT WE DO</span>
+                        <span className="text-[#2b7fff] font-bold tracking-wider uppercase text-sm">WHAT WE SERVE</span>
                         <h2 className="text-3xl md:text-4xl font-bold text-[#002b55] mt-2">We offer professional services</h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                         {/* Feature Cards */}
-                        {features.map((item) => (
+                        {services.map((item) => (
                             <div
                                 key={item.id}
                                 onClick={() => setSelectedFeature(item)}
@@ -166,56 +205,6 @@ export const Home = () => {
                     </div>
                 </div>
             </div>
-
-            {/* What We Serve Section */}
-            <div className="py-24 bg-white">
-                <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-24">
-                    <div className="text-center mb-16">
-                        <span className="text-[#2b7fff] font-bold tracking-wider uppercase text-sm">WHAT WE SERVE</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-[#002b55] mt-2">We provide best services</h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {services.map((service) => (
-                            <div
-                                key={service.id}
-                                className="group relative h-80 overflow-hidden cursor-pointer"
-                                onClick={() => {
-                                    setSelectedService(service)
-                                    setIsModalOpen(true)
-                                }}
-                            >
-                                {/* Background Image */}
-                                <img
-                                    src={service.image}
-                                    alt={service.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-
-                                {/* Desktop Overlay (Hover Only) */}
-                                <div className="hidden lg:flex absolute inset-0 bg-[#002b55]/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex-col items-center justify-center p-6 text-white text-center">
-                                    <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center mb-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                        <span className="text-2xl font-light">+</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">{service.title}</h3>
-                                    <p className="mt-2 text-sm text-gray-200 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100">{service.category}</p>
-                                </div>
-
-                                {/* Mobile/Tablet View (Always Visible Bottom Bar) */}
-                                <div className="lg:hidden absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 flex items-end justify-between">
-                                    <div>
-                                        <h3 className="text-xl font-bold text-white">{service.title}</h3>
-                                        <p className="text-[#f0b100] text-sm font-medium mt-1 uppercase tracking-wide">{service.category}</p>
-                                    </div>
-                                    <div className="w-10 h-10 rounded-full bg-[#f0b100] flex items-center justify-center text-white shrink-0 shadow-lg transform transition-transform active:scale-95">
-                                        <span className="text-2xl font-light leading-none mb-1">+</span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div >
-            </div >
 
             {/* Our Team Section */}
             < div className="py-24 bg-gray-50 relative" >
@@ -268,9 +257,16 @@ export const Home = () => {
                 title={selectedFeature?.title}
             >
                 <div className="space-y-4">
-                    <p className="text-gray-600 leading-relaxed">
-                        {selectedFeature?.details}
-                    </p>
+                    <ul className="list-disc pl-5">
+                        {selectedFeature?.details.map((detail, index) => (
+                            <li
+                                key={index}
+                                className="text-gray-600 leading-relaxed"
+                            >
+                                {detail}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </Modal >
 

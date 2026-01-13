@@ -267,8 +267,8 @@ export const Navbar = () => {
                             <NavItem title="Home" path={navigationPaths.Home} />
                             <NavItem title="About Us" path={navigationPaths.About} />
                             <NavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={navigationPaths.Services} />
-                            <NavItem title="GST" path={navigationPaths.GST.Root} dropdownItems={navigationPaths.GST} />
-                            <NavItem title="Knowledge Base" path={navigationPaths.KnowledgeBase.Root} dropdownItems={navigationPaths.KnowledgeBase} />
+                            {/* <NavItem title="GST" path={navigationPaths.GST.Root} dropdownItems={navigationPaths.GST} /> */}
+                            {/* <NavItem title="Knowledge Base" path={navigationPaths.KnowledgeBase.Root} dropdownItems={navigationPaths.KnowledgeBase} /> */}
                             <NavItem title="Contact" path={navigationPaths.ContactUs} />
                         </nav>
 
@@ -292,8 +292,8 @@ export const Navbar = () => {
                         <MobileNavItem title="Home" path={navigationPaths.Home} />
                         <MobileNavItem title="About Us" path={navigationPaths.About} />
                         <MobileNavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={navigationPaths.Services} />
-                        <MobileNavItem title="GST" path={navigationPaths.GST.Root} dropdownItems={navigationPaths.GST} />
-                        <MobileNavItem title="Knowledge Base" path={navigationPaths.KnowledgeBase.Root} dropdownItems={navigationPaths.KnowledgeBase} />
+                        {/* <MobileNavItem title="GST" path={navigationPaths.GST.Root} dropdownItems={navigationPaths.GST} /> */}
+                        {/* <MobileNavItem title="Knowledge Base" path={navigationPaths.KnowledgeBase.Root} dropdownItems={navigationPaths.KnowledgeBase} /> */}
                         <MobileNavItem title="Contact Us" path={navigationPaths.ContactUs} />
                     </div>
                 </div>
