@@ -4,9 +4,9 @@ import { toast } from 'react-toastify';
 import emailjs from '@emailjs/browser';
 
 // Replace these with your actual EmailJS keys
-const EMAILJS_PUBLIC_KEY = "0PYbg4aNTGfbjQaCt";
-const EMAILJS_SERVICE_ID = "service_gt3b82m";
-const EMAILJS_TEMPLATE_ID = "template_6krhz45";
+const EMAILJS_PUBLIC_KEY = "pDdJJOc-D-9cbPlBc";
+const EMAILJS_SERVICE_ID = "service_qoufds3";
+const EMAILJS_TEMPLATE_ID = "template_2u79zrk";
 
 export const Contact = () => {
     const [formData, setFormData] = useState({
