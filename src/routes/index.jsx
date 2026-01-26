@@ -5,6 +5,7 @@ import { About } from '../pages/About';
 import { Services } from '../pages/Services';
 import { AppLayouts } from './AppLayouts';
 import { Contact } from '../pages/Contact';
+import { TeamDetail } from '../pages/TeamDetail';
 
 
 const AppRoutes = () => {
@@ -15,6 +16,7 @@ const AppRoutes = () => {
         { path: navigationPaths.Home, element: <Home /> },
         { path: navigationPaths.About, element: <About /> },
         { path: navigationPaths.ContactUs, element: <Contact /> },
+        { path: navigationPaths.TeamDetail, element: <TeamDetail /> },
     ]
 
 

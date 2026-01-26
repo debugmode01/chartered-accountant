@@ -114,6 +114,7 @@ export const navigationPaths = {
     NewsFeed: '/news',
     Testimonials: '/testimonials',
     Projects: '/projects',
+    TeamDetail: '/team/:id',
     Resources: {
         FDI_Policy: '#', // External or PDF
         TradeMarks: '#',
