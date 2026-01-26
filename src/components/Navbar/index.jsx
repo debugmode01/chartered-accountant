@@ -262,17 +262,6 @@ export const Navbar = () => {
 
     return (
         <>
-            {/* Top Utility Bar */}
-            <div className="bg-[#2b7fff] text-white h-10 px-6 md:px-16 lg:px-24 flex items-center justify-between text-sm font-sans">
-                <div className="flex items-center space-x-4">
-                    <span className="flex items-center gap-2"><Phone className="w-4 h-4" />+91 9899092439</span>
-                    <span className="hidden sm:flex items-center gap-2"><Mail className="w-4 h-4" /> ganshulassociates@gmail.com</span>
-                </div>
-                <div className="flex items-center space-x-4">
-                    <span>Monday - Saturday, 10am - 6:30pm</span>
-                </div>
-            </div>
-
             {/* Sticky Main Navbar */}
             <header className="sticky top-0 z-50 w-full shadow-md font-sans bg-white">
                 <div className="h-20 relative">
@@ -290,7 +279,7 @@ export const Navbar = () => {
                             <Link to={navigationPaths.Home} className="flex items-center gap-2 lg:gap-3">
                                 <img src={imagePaths.caLogo} alt="Company Logo" className="h-10 lg:h-12 w-auto object-contain" />
                                 <div className="flex flex-col">
-                                    <span className="text-lg lg:text-xl xl:text-2xl font-bold text-[#2b7fff] leading-tight text-nowrap">CA ANSHUL GUPTA</span>
+                                    <span className="text-lg lg:text-xl xl:text-2xl font-bold text-[#2b7fff] leading-tight text-nowrap">G Anshul & Associates</span>
                                     <span className="text-[10px] lg:text-xs text-gray-500 font-medium tracking-wider text-nowrap">CHARTERED ACCOUNTANTS</span>
                                 </div>
                             </Link>
@@ -299,10 +288,8 @@ export const Navbar = () => {
                         {/* Desktop Navigation */}
                         <nav className="hidden lg:flex items-center h-full space-x-1 pl-2 relative z-20">
                             <NavItem title="Home" path={navigationPaths.Home} />
-                            <NavItem title="About Us" path={navigationPaths.About} />
                             <NavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={servicesDropdown} />
-                            {/* <NavItem title="GST" path={navigationPaths.GST.Root} dropdownItems={navigationPaths.GST} /> */}
-                            {/* <NavItem title="Knowledge Base" path={navigationPaths.KnowledgeBase.Root} dropdownItems={navigationPaths.KnowledgeBase} /> */}
+                            <NavItem title="Our Team" path="/#team-section" />
                             <NavItem title="Contact" path={navigationPaths.ContactUs} />
                         </nav>
 
@@ -324,10 +311,8 @@ export const Navbar = () => {
                 <div className={`lg:hidden bg-white border-t border-gray-100 absolute w-full z-40 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen opacity-100 shadow-xl' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                     <div className="flex flex-col py-2 overflow-y-auto max-h-[calc(100vh-120px)]">
                         <MobileNavItem title="Home" path={navigationPaths.Home} />
-                        <MobileNavItem title="About Us" path={navigationPaths.About} />
                         <MobileNavItem title="Services" path={navigationPaths.Services.Root} dropdownItems={servicesDropdown} />
-                        {/* <MobileNavItem title="GST" path={navigationPaths.GST.Root} dropdownItems={navigationPaths.GST} /> */}
-                        {/* <MobileNavItem title="Knowledge Base" path={navigationPaths.KnowledgeBase.Root} dropdownItems={navigationPaths.KnowledgeBase} /> */}
+                        <MobileNavItem title="Our Team" path="/#team-section" />
                         <MobileNavItem title="Contact Us" path={navigationPaths.ContactUs} />
                     </div>
                 </div>

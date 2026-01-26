@@ -5,6 +5,15 @@ import { navigationPaths } from '../../constants/navigationPath';
 export const Footer = () => {
     return (
         <footer className="bg-[#161616] text-gray-400 font-sans">
+            <div className="bg-[#2b7fff] text-white h-10 px-6 md:px-16 lg:px-24 flex items-center justify-between text-sm font-sans">
+                <div className="flex items-center space-x-4">
+                    <span className="flex items-center gap-2"><Phone className="w-4 h-4" />+91 9899092439</span>
+                    <span className="hidden sm:flex items-center gap-2"><Mail className="w-4 h-4" /> ganshulassociates@gmail.com</span>
+                </div>
+                <div className="flex items-center space-x-4">
+                    <span>Monday - Friday, 10am - 6:30pm</span>
+                </div>
+            </div>
             {/* Main Footer Section */}
             <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-24 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -35,8 +44,8 @@ export const Footer = () => {
                                 </div>
                                 <p className="leading-relaxed">
                                     201 - B, 2nd Floor, Praksh Deep Building, <br />
-                                    Near PNB Bank and Delhi Medical Association, Daryaganj <br />
-                                    New Delhi - 110002
+                                    Near PNB Bank and Delhi Medical Association, <br />
+                                    Daryaganj, New Delhi - 110002
                                 </p>
                             </div>
                             <div className="flex items-center gap-4">
@@ -61,8 +70,8 @@ export const Footer = () => {
                                 </div>
                                 <p className="leading-relaxed">
                                     Tirath Ram Shah Hospital, <br />
-                                    11-A ASHOKA APARTMENT 7 RAJPUR ROAD, Civil Lines <br />
-                                    New Delhi, Central Delhi, Delhi, 110054
+                                    11-A ASHOKA APARTMENT 7 RAJPUR ROAD, <br />
+                                    Civil Lines, New Delhi, Central Delhi, Delhi, 110054
                                 </p>
                             </div>
                             <div className="flex items-center gap-4">

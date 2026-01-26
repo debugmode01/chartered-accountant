@@ -53,27 +53,19 @@ export const About = () => {
     return (
         <div className="min-h-screen bg-white">
             <div className="container mx-auto px-6 md:px-16 lg:px-24 py-12">
-                <div className="flex flex-col md:flex-row gap-8 items-center mb-24">
-                    <div className="md:w-1/2">
-                        <img
-                            src={imagePaths.caLogo}
-                            alt="About Us"
-                            className="rounded-lg shadow-lg w-full h-auto object-cover"
-                        />
-                    </div>
-                    <div className="md:w-1/2">
+                <div className="flex flex-col md:flex-row items-center">
+                    <div className="md:w-full">
                         <h1 className="text-3xl font-bold text-[#2b7fff] mb-4">About Us</h1>
                         <p className="text-gray-600 leading-relaxed mb-4">
-                            We are a leading Chartered Accountancy firm rendering comprehensive professional services which include audit, management consultancy, tax consultancy, accounting services, manpower management, secretarial services etc.
+                            Established in 2019, our firm is built on a foundation of Trust, Transparency, and Timeliness. We provide a full suite of professional services—including financial book-keeping, management consultancy, taxation and financial auditing. Our goal is to handle the complexities of your finances so you can focus on what you do best: running your business.
                         </p>
                         <p className="text-gray-600 leading-relaxed">
-                            We are a professionally managed firm. The team consists of distinguished chartered accountants, corporate financial advisors and tax consultants. The firm represents a combination of specialized skills, which are geared to offers sound financial advice and personalized proactive services.
+                            Our approach is rooted in the understanding that no two businesses are the same. We take the time to understand your challenges, tailoring our services to meet your specific requirements. By fostering a culture of accessibility and open communication, we ensure that our financial advice is always within your reach. Our commitment to excellence is reflected in the success of our clients and we measure our achievements by the strength of the trust they place in us.
                         </p>
                     </div>
                 </div>
-
                 {/* Core Values Section */}
-                <div className="py-12">
+                {/* <div className="py-12">
                     <div className="text-center mb-16">
                         <span className="text-[#2b7fff] font-bold tracking-wider uppercase text-sm">CORE VALUES</span>
                         <h2 className="text-3xl md:text-4xl font-bold text-[#002b55] mt-2">Professional values we follow</h2>
@@ -98,7 +90,7 @@ export const About = () => {
                             )
                         })}
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )

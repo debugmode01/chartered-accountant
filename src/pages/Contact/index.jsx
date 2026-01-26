@@ -1,6 +1,12 @@
 import { useState } from 'react';
-import { MapPin, Phone, Mail, Send, Loader2 } from 'lucide-react';
+import { MapPin, Phone, Send, Loader2 } from 'lucide-react';
 import { toast } from 'react-toastify';
+import emailjs from '@emailjs/browser';
+
+// Replace these with your actual EmailJS keys
+const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_TEMPLATE_ID = "template_2u79zrk";
 
 export const Contact = () => {
     const [formData, setFormData] = useState({
@@ -24,9 +30,7 @@ export const Contact = () => {
         }
 
         // Phone Validation
-        if (!formData.phone.trim()) {
-            newErrors.phone = 'Phone Number is required';
-        } else if (!/^\d{10}$/.test(formData.phone)) {
+        if (formData.phone && !/^\d{10}$/.test(formData.phone)) {
             newErrors.phone = 'Phone number must be exactly 10 digits';
         }
 
@@ -39,9 +43,7 @@ export const Contact = () => {
         }
 
         // Subject Validation
-        if (!formData.subject.trim()) {
-            newErrors.subject = 'Subject is required';
-        } else if (formData.subject.length < 5) {
+        if (formData.subject && formData.subject.length < 5) {
             newErrors.subject = 'Subject must be at least 5 characters';
         }
 
@@ -66,16 +68,30 @@ export const Contact = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!validate()) return;
 
         setLoading(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
+        const templateParams = {
+            from_name: formData.name,
+            from_email: formData.email,
+            phone: formData.phone,
+            subject: formData.subject,
+            message: formData.message,
+            to_name: "G Anshul & Associates",
+        };
+
+        try {
+            await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                templateParams,
+                EMAILJS_PUBLIC_KEY
+            );
+
             toast.success("Message sent successfully! We will get back to you soon.");
             setFormData({
                 name: '',
@@ -85,7 +101,12 @@ export const Contact = () => {
                 message: ''
             });
             setErrors({});
-        }, 2000);
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+            toast.error("Failed to send message. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -112,8 +133,8 @@ export const Contact = () => {
                         <h3 className="text-xl font-bold text-[#002b55] mb-4">Office Address</h3>
                         <p className="text-gray-600 leading-relaxed">
                             201 - B, 2nd Floor, Praksh Deep Building, <br />
-                            Near PNB Bank and Delhi Medical Association, Daryaganj <br />
-                            New Delhi - 110002
+                            Near PNB Bank and Delhi Medical Association, <br />
+                            Daryaganj, New Delhi - 110002
                         </p>
                     </div>
 
@@ -125,8 +146,8 @@ export const Contact = () => {
                         <h3 className="text-xl font-bold text-[#002b55] mb-4">Registered Address</h3>
                         <p className="text-gray-600 leading-relaxed">
                             Tirath Ram Shah Hospital, <br />
-                            11-A ASHOKA APARTMENT 7 RAJPUR ROAD, Civil Lines <br />
-                            New Delhi, Central Delhi, Delhi, 110054
+                            11-A ASHOKA APARTMENT 7 RAJPUR ROAD, <br />
+                            Civil Lines, New Delhi, Central Delhi, Delhi, 110054
                         </p>
                     </div>
 
