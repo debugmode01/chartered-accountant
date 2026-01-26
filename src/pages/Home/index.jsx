@@ -54,7 +54,7 @@ export const Home = () => {
             id: 2,
             name: "Mihir Ranjan Samal",
             role: "",
-            image: "/mihir-ranjan-samal.jpeg",
+            image: "/mihir.jpeg",
             bio: ""
         },
         {
