@@ -4,9 +4,9 @@ import { toast } from 'react-toastify';
 import emailjs from '@emailjs/browser';
 
 // Replace these with your actual EmailJS keys
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-const EMAILJS_TEMPLATE_ID = "template_2u79zrk";
+const EMAILJS_PUBLIC_KEY = "0PYbg4aNTGfbjQaCt";
+const EMAILJS_SERVICE_ID = "service_gt3b82m";
+const EMAILJS_TEMPLATE_ID = "template_6krhz45";
 
 export const Contact = () => {
     const [formData, setFormData] = useState({
@@ -43,7 +43,9 @@ export const Contact = () => {
         }
 
         // Subject Validation
-        if (formData.subject && formData.subject.length < 5) {
+        if (!formData.subject.trim()) {
+            newErrors.subject = 'Subject is required';
+        } else if (formData.subject.length < 5) {
             newErrors.subject = 'Subject must be at least 5 characters';
         }
 
@@ -71,36 +73,42 @@ export const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!validate()) return;
+        if (!validate()) {
+            toast.error("Please fill in all required fields correctly.");
+            return;
+        }
 
         setLoading(true);
 
         const templateParams = {
-            from_name: formData.name,
-            from_email: formData.email,
+            name: formData.name,
+            email: formData.email,
             phone: formData.phone,
-            subject: formData.subject,
+            title: formData.subject,
             message: formData.message,
-            to_name: "G Anshul & Associates",
         };
 
         try {
-            await emailjs.send(
+            const response = await emailjs.send(
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
                 templateParams,
                 EMAILJS_PUBLIC_KEY
             );
 
-            toast.success("Message sent successfully! We will get back to you soon.");
-            setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                subject: '',
-                message: ''
-            });
-            setErrors({});
+            if (response.status === 200) {
+                toast.success("Message sent successfully! We will get back to you soon.");
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    subject: '',
+                    message: ''
+                });
+                setErrors({});
+            } else {
+                throw new Error('Unexpected response status');
+            }
         } catch (error) {
             console.error('EmailJS Error:', error);
             toast.error("Failed to send message. Please try again later.");
@@ -179,7 +187,9 @@ export const Contact = () => {
                         <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                                        Full Name <span className="text-red-500 ml-1">*</span>
+                                    </label>
                                     <input
                                         type="text"
                                         id="name"
@@ -208,7 +218,9 @@ export const Contact = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                                        Email Address <span className="text-red-500 ml-1">*</span>
+                                    </label>
                                     <input
                                         type="email"
                                         id="email"
@@ -221,7 +233,9 @@ export const Contact = () => {
                                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                                 </div>
                                 <div>
-                                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                                        Subject <span className="text-red-500 ml-1">*</span>
+                                    </label>
                                     <input
                                         type="text"
                                         id="subject"
@@ -236,7 +250,9 @@ export const Contact = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Message <span className="text-red-500 ml-1">*</span>
+                                </label>
                                 <textarea
                                     id="message"
                                     name="message"
